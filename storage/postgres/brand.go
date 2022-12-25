@@ -184,5 +184,5 @@ func (psql Postgres) DeleteBrand(req *brand.DeleteBrandRequest) error {
 	if affect > 0 {
 		return nil
 	}
-	return errors.New("brand had been already deleted!")
+	return errors.New("brand had been already deleted")
 }
