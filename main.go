@@ -2,9 +2,11 @@ package main
 
 import (
 	"MyProjects/RentCar_gRPC/rent_car_service/config"
+	"MyProjects/RentCar_gRPC/rent_car_service/protogen/brand"
+	"MyProjects/RentCar_gRPC/rent_car_service/protogen/car"
 
-	"MyProjects/RentCar_gRPC/rent_car_service/services/brand"
-	"MyProjects/RentCar_gRPC/rent_car_service/services/car"
+	brandService "MyProjects/RentCar_gRPC/rent_car_service/services/brand"
+	carService "MyProjects/RentCar_gRPC/rent_car_service/services/car"
 
 	"MyProjects/RentCar_gRPC/rent_car_service/storage"
 	"MyProjects/RentCar_gRPC/rent_car_service/storage/postgres"
@@ -32,8 +34,8 @@ func main() {
 	)
 
 	var err error
-	var Stg storage.StorageInter
-	Stg, err = postgres.InitDB(psqlAUTH)
+	var interStg storage.StorageInter
+	interStg, err = postgres.InitDB(psqlAUTH)
 	if err != nil {
 		panic(err)
 	}
@@ -45,17 +47,29 @@ func main() {
 		panic(err)
 	}
 
-	srv := grpc.NewServer()
+	newS := grpc.NewServer()
 
-	brandService := brand.NewBrandService(Stg)
-	brand.RegisterAuthorServiceServer(srv, brandService)
+	b := &brandService.BrandService{
+		Stg: interStg,
+	}
+	brand.RegisterBrandServiceServer(newS, b)
 
-	carService := car.NewBrandService(Stg)
-	brand.RegisterBrandServiceServer(srv, carService)
+	c := &carService.CarService{
+		Stg: interStg,
+	}
+	car.RegisterCarServiceServer(newS, c)
 
-	reflection.Register(srv)
+	// srv := grpc.NewServer()
 
-	if err := srv.Serve(listener); err != nil {
+	// brandService := brand.NewBrandService(Stg)
+	// brand.RegisterBrandServiceServer(srv, brandService)
+
+	// carService := car.NewCarService(Stg)
+	// brand.RegisterCarServiceServer(srv, carService)
+
+	reflection.Register(newS)
+
+	if err := newS.Serve(listener); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}
 
