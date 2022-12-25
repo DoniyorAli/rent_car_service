@@ -1,20 +1,22 @@
 package storage
 
 import (
-	"MyProjects/RentCar_gRPC/rent_car_service/protogen/blogpost"
+	"MyProjects/RentCar_gRPC/rent_car_service/protogen/brand"
+	"MyProjects/RentCar_gRPC/rent_car_service/protogen/car"
 )
 
 type StorageInter interface {
-	//* Article
-	AddNewArticle(id string, box *blogpost.CreateArticleRequest) error
-	GetArticleById(id string) (*blogpost.GetArticleByIDResponse, error)
-	GetArticleList(offset, limit int, search string) (dataset *blogpost.GetArticleListResponse, err error)
-	UpdateArticle(box *blogpost.UpdateArticleRequest) error
-	DeleteArticle(id string) error
-	//* Author
-	AddAuthor(id string, box *blogpost.CreateAuthorRequest) error
-	GetAuthorById(id string) (*blogpost.Author, error)
-	GetAuthorList(limit, offset int, search string) (dataset *blogpost.GetAuthorListResponse, err error)
-	UpdateAuthor(box *blogpost.UpdateAuthorRequest) error
-	DeleteAuthor(id string) error
+	//* Brand
+	AddNewBrand(id string, req *brand.CreateBrandRequest) (res *brand.Brand, err error)
+	GetBrandById(req *brand.GetBrandByIDRequest) (*brand.Brand, error)
+	GetBrandList(req *brand.GetBrandListRequest) (*brand.GetBrandListResponse, error)
+	UpdateBrand(id string, req *brand.UpdateBrandRequest) error
+	DeleteBrand(req *brand.DeleteBrandRequest) error
+
+	//* Car
+	AddCar(id string, req *car.CreateCarRequest) error
+	GetCarById(id string) (*car.GetCarByIDResponse, error)
+	GetCarList(limit, offset int, search string) (*car.GetCarListResponse, error)
+	UpdateCar(id string, box *car.UpdateCarRequest) error
+	DeleteCar(id string) error
 }

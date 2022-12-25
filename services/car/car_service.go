@@ -36,7 +36,7 @@ func (cs *CarService) CreateCar(ctx context.Context, req *car.CreateCarRequest) 
 		Mileage: res.Mileage,
 		Year: res.Year,
 		Price: res.Price,
-		BrandId: res.BrandId, //! ??????????????????????? res.Brand.BramdId
+		BrandId: res.Brand.BrandId, //! ??????????????????????? res.Brand.BramdId
 		CreatedAt: res.CreatedAt,
 		UpdatedAt: res.UpdatedAt,
 	}, nil
@@ -80,7 +80,7 @@ func (cs *CarService) UpdateCar(ctx context.Context, req *car.UpdateCarRequest) 
 		Mileage: res.Mileage,
 		Year: res.Year,
 		Price: res.Price,
-		BrandId: res.BrandId,
+		BrandId: res.Brand.BrandId,
 		CreatedAt: res.CreatedAt,
 		UpdatedAt: res.UpdatedAt,
 	}, nil
@@ -106,7 +106,7 @@ func (cs *CarService) DeleteCar(ctx context.Context, req *car.DeleteCarRequest) 
 		Mileage: res.Mileage,
 		Year: res.Year,
 		Price: res.Price,
-		BrandId: res.BrandId,
+		BrandId: res.Brand.BrandId,
 		CreatedAt: res.CreatedAt,
 		UpdatedAt: res.UpdatedAt,
 	}, nil

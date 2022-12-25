@@ -32,8 +32,8 @@ func main() {
 	)
 
 	var err error
-	var stg storage.StorageInter
-	stg, err = postgres.InitDB(psqlAUTH)
+	var Stg storage.StorageInter
+	Stg, err = postgres.InitDB(psqlAUTH)
 	if err != nil {
 		panic(err)
 	}
@@ -47,11 +47,11 @@ func main() {
 
 	srv := grpc.NewServer()
 
-	brandService := brand.NewAuthorService(stg)
-	blogpost.RegisterAuthorServiceServer(srv, brandService)
+	brandService := brand.NewBrandService(Stg)
+	brand.RegisterAuthorServiceServer(srv, brandService)
 
-	carService := car.NewArticleService(stg)
-	blogpost.RegisterArticleServiceServer(srv, carService)
+	carService := car.NewBrandService(Stg)
+	brand.RegisterBrandServiceServer(srv, carService)
 
 	reflection.Register(srv)
 
