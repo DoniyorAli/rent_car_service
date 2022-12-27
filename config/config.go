@@ -46,7 +46,7 @@ func Load() Config {
 	config.PostgresHost = cast.ToString(getOrReturnDefaultValue("POSTGRES_HOST", "127.0.0.1"))
 	config.PostgresPort = cast.ToInt(getOrReturnDefaultValue("POSTGRES_PORT", 9876))
 	config.PostgresDatabase = cast.ToString(getOrReturnDefaultValue("POSTGRES_DATABASE", "rentcar_service_db"))
-	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "otherUser"))
+	config.PostgresUser = cast.ToString(getOrReturnDefaultValue("POSTGRES_USER", "you_are_user"))
 	config.PostgresPassword = cast.ToString(getOrReturnDefaultValue("POSTGRES_PASSWORD", "your_db_pswd"))
 	
 	return config

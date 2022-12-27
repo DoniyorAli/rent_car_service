@@ -8,7 +8,7 @@ import (
 
 // *=========================================================================
 func (psql Postgres) AddNewBrand(id string, req *brand.CreateBrandRequest) (res *brand.Brand, err error) {
-	_, err = psql.homeDB.Exec(`INSERT INTO brand 
+	_, err = psql.homeDB.Exec(`INSERT INTO "brand" 
 	(
 		id,
 		name,
