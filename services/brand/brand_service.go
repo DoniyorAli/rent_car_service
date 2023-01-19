@@ -4,6 +4,7 @@ import (
 	"MyProjects/RentCar_gRPC/rent_car_service/protogen/brand"
 	"MyProjects/RentCar_gRPC/rent_car_service/storage"
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 )
@@ -36,6 +37,7 @@ func (b *BrandService) GetBrandByID(ctx context.Context, req *brand.GetBrandByID
 
 // ?==============================================================================================================
 func (b *BrandService) GetBrandList(ctx context.Context, req *brand.GetBrandListRequest) (*brand.GetBrandListResponse, error) {
+	fmt.Println(req)
 	res, err := b.Stg.GetBrandList(req)
 	if err != nil {
 		return res, nil
