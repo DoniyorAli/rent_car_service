@@ -4,6 +4,7 @@ import (
 	"MyProjects/RentCar_gRPC/rent_car_service/protogen/brand"
 	"MyProjects/RentCar_gRPC/rent_car_service/protogen/car"
 	"errors"
+	"fmt"
 	"time"
 )
 
@@ -23,7 +24,7 @@ func (psql Postgres) AddCar(id string, req *car.CreateCarRequest) error {
 		id,
 		model,
 		color,
-		cartype,
+		car_type,
 		mileage,
 		year,
 		price,
@@ -60,14 +61,14 @@ func (psql Postgres) GetCarById(id string) (*car.GetCarByIDResponse, error) {
 	res := &car.GetCarByIDResponse{
 		Brand: &car.GetCarByIDResponse_Brand{},
 	}
-
+	fmt.Println(id)
 	var deletedAt *time.Time
 	var updatedAt, brandUpdatedAt *string
 	err := psql.homeDB.QueryRow(`SELECT 
 		c.id,
 		c.model,
 		c.color,
-		c.cartype,
+		c.car_type,
 		c.mileage,
 		c.year,
 		c.price,
@@ -122,12 +123,12 @@ func (psql Postgres) GetCarList(limit, offset int, search string) (*car.GetCarLi
 	resp := &car.GetCarListResponse{
 		Cars: make([]*car.Car, 0),
 	}
-
+	fmt.Println(search, limit, offset)
 	rows, err := psql.homeDB.Queryx(`SELECT 
 		id,
 		model,
 		color,
-		cartype,
+		car_type,
 		mileage,
 		year,
 		price,
@@ -142,6 +143,7 @@ func (psql Postgres) GetCarList(limit, offset int, search string) (*car.GetCarLi
 		limit,
 		offset,
 	)
+
 	if err != nil {
 		return resp, err
 	}
@@ -172,6 +174,7 @@ func (psql Postgres) GetCarList(limit, offset int, search string) (*car.GetCarLi
 		resp.Cars = append(resp.Cars, c)
 
 	}
+	fmt.Println(resp)
 	return resp, err
 }
 
@@ -180,12 +183,13 @@ func (psql Postgres) UpdateCar(id string, box *car.UpdateCarRequest) error {
 
 	res, err := psql.homeDB.NamedExec(`
 	UPDATE "car"  
-		SET model=:m, color=:c, cartype=:ct, mileage=:ml, year=:y, price=:p, brand_id=:b, updated_at=now() 
+		SET model=:m, color=:c, car_type=:ct, mileage=:ml, year=:y, price=:p, brand_id=:b, updated_at=now() 
 			WHERE deleted_at IS NULL AND id=:id`, 
 	map[string]interface{}{
 		"id": box.Id,
 		"m":  box.Model,
 		"c":  box.Color,
+		"ct": box.CarType,
 		"ml": box.Mileage,
 		"y": box.Year,
 		"p": box.Price,
