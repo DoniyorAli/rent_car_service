@@ -4,10 +4,12 @@ import (
 	"MyProjects/RentCar_gRPC/rent_car_service/protogen/brand"
 	"database/sql"
 	"errors"
+	"fmt"
 )
 
 // *=========================================================================
 func (psql Postgres) AddNewBrand(id string, req *brand.CreateBrandRequest) (res *brand.Brand, err error) {
+	fmt.Println(req)
 	_, err = psql.homeDB.Exec(`INSERT INTO "brand" 
 	(
 		id,
@@ -30,6 +32,7 @@ func (psql Postgres) AddNewBrand(id string, req *brand.CreateBrandRequest) (res 
 		req.Manufacturer,
 		req.AboutBrand,
 	)
+	fmt.Println(err)
 	if err != nil {
 		return nil, errors.New("error in AddNewBrand")
 	}
