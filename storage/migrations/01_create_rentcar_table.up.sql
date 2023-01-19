@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS "brand" (
 	"name" VARCHAR(255) UNIQUE NOT NULL,
     "country" TEXT NOT NULL,
     "manufacturer" TEXT NOT NULL,
-	"aboutBrend" TEXT NOT NULL,
+	"about_brand" TEXT NOT NULL,
 	"created_at" TIMESTAMP DEFAULT now(),
 	"updated_at" TIMESTAMP,
 	"deleted_at" TIMESTAMP
