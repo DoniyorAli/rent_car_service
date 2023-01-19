@@ -53,7 +53,7 @@ func (cs *CarService) GetCarByID(ctx context.Context, req *car.GetCarByIDRequest
 
 // ?===============================================================================================================
 func (cs *CarService) GetCarList(ctx context.Context, req *car.GetCarListRequest) (*car.GetCarListResponse, error) {
-	res, err := cs.Stg.GetCarList(int(req.Offset), int(req.Limit), req.Search)
+	res, err := cs.Stg.GetCarList(int(req.Limit), int(req.Offset), req.Search)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "cs.Stg.GetCarList: %s", err.Error())
 	}
